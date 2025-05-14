@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Information</title>
+  <script src="validation.js" defer></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #f3f3f3, #fce4ec); /* Gris clair vers rose clair */
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #d81b60; /* Rose soutenu */
+      margin-top: 40px;
+      font-size: 2em;
+    }
+
+    form {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 30px;
+      background-color: #ffffff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 16px;
+      border: 1px solid #f8bbd0; /* Bordure rose clair */
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: left;
+    }
+
+    label {
+      font-weight: bold;
+      color: #444;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    input[type="password"],
+    input[type="tel"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+      background-color: #fff;
+      transition: border-color 0.3s;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: #ec407a; /* Rose vif */
+      outline: none;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    input[type="radio"] {
+      margin-right: 8px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      border: none;
+      border-radius: 8px;
+      background-color: #f06292; /* Rose doux */
+      color: white;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #ec407a; /* Rose foncé */
+    }
+  </style>
+</head>
+<body>
+  <h1>Create An Account</h1>
+  <form onsubmit="return infos_validation()" method="post" action="inscription.php">
+    <table>
+      <tr>
+        <th><label for="FirstName">First Name:</label></th>
+        <td><input type="text" id="FirstName" name="No_Clt" placeholder="Enter your first name" /></td>
+      </tr>
+      <tr>
+        <th><label for="LastName">Last Name:</label></th>
+        <td><input type="text" id="LastName" name="Pno_Clt" placeholder="Enter your last name" /></td>
+      </tr>
+      <tr>
+        <th><label for="age">Age:</label></th>
+        <td><input type="number" id="age" name="Age_Clt" placeholder="Enter your age" /></td>
+      </tr>
+      <tr>
+        <th><label for="wilaya">Wilaya:</label></th>
+        <td>
+          <select id="wilaya" name="Wi_Clt" required>
+            <option value="">-- Select Wilaya --</option>
+            <option value="Setif">Setif</option>
+            <option value="Alger">Alger</option>
+            <option value="Tlemcen">Tlemcen</option>
+            <option value="Oran">Oran</option>
+            <option value="Blida">Blida</option>
+            <option value="Biskra">Biskra</option>
+            <option value="Adrar">Adrar</option>
+            <option value="Batna">Batna</option>
+            <option value="Annaba">Annaba</option>
+            <option value="El Tarf">El Tarf</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <th><label for="tel">Phone Number:</label></th>
+        <td><input type="tel" id="tel" name="Tel_Clt" placeholder="Enter your phone number" maxlength="10" /></td>
+      </tr>
+      <tr>
+        <th><label for="email">E-mail:</label></th>
+        <td><input type="email" id="email" name="Mail_Clt" placeholder="Enter your e-mail" /></td>
+      </tr>
+      <tr>
+        <th><label for="address">Address:</label></th>
+        <td><textarea id="address" name="Adr_Clt" placeholder="Enter your address"></textarea></td>
+      </tr>
+      <tr>
+        <th><label for="Pass">Password:</label></th>
+        <td><input type="password" id="Pass" name="Mot_Clt" placeholder="Enter your password" /></td>
+      </tr>
+      <tr>
+        <th><label for="CPass">Confirm Password:</label></th>
+        <td><input type="password" id="CPass" name="Confirm_Mot_Clt" placeholder="Confirm your password" /></td>
+      </tr>
+      <tr>
+        <th><label>Gender:</label></th>
+        <td>
+          <input type="radio" name="Sexe_Clt" value="Male" /> Male
+          <input type="radio" name="Sexe_Clt" value="Female" /> Female
+        </td>
+      </tr>
+      <tr>
+        <th></th>
+        <td>
+          <button type="reset">Clear</button>
+          <button type="submit">Send</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Commande Produit</title>
+  <script defer>
+    function redirigerVersLogin(event) {
+      event.preventDefault();
+
+      // Récupérer les valeurs du formulaire
+      const quantite = document.querySelector('select[name="quantite"]').value;
+      const couleurs = Array.from(document.querySelectorAll('input[name="couleur"]:checked'))
+                            .map(cb => cb.value)
+                            .join(',');
+
+      // Redirection vers login.html avec les paramètres dans l'URL
+      const url = `login.html?quantite=${quantite}&couleur=${encodeURIComponent(couleurs)}&redir=commande`;
+      window.location.href = url;
+    }
+  </script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #f3f3f3, #fce4ec);
+      margin: 0;
+      padding: 40px 0;
+    }
+
+    table {
+      margin: auto;
+      background-color: #ffffff;
+      border-collapse: collapse;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border: 2px solid #f8bbd0;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    td {
+      padding: 15px;
+      font-size: 1em;
+      color: #444;
+      border-bottom: 1px solid #f3f3f3;
+    }
+
+    input[type="text"],
+    select {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+    }
+
+    input[disabled] {
+      color: #555;
+      background-color: #eee;
+    }
+
+    input[type="checkbox"] {
+      margin-right: 5px;
+    }
+
+    input[type="submit"] {
+      padding: 12px 24px;
+      background-color: #f06292;
+      color: white;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #ec407a;
+    }
+
+    img {
+      display: block;
+      margin: auto;
+      border-radius: 8px;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+
+<form onsubmit="redirigerVersLogin(event)">
+  <table>
+    <tr>
+      <td rowspan="6">
+        <img src="photo_2025-05-14_18-12-34.jpg" width="300" height="300" alt="Produit">
+      </td>
+      <td>Nom du vendeur :</td>
+      <td><input type="text" value="Vendeur1" disabled></td>
+    </tr>
+    <tr>
+      <td>Prix :</td>
+      <td><input type="text" value="25.99€" disabled></td>
+    </tr>
+    <tr>
+      <td>Référence :</td>
+      <td><input type="text" value="REF1234" disabled></td>
+    </tr>
+    <tr>
+      <td>Couleur :</td>
+      <td>
+        <input type="checkbox" name="couleur" value="Doree">Doree
+        <input type="checkbox" name="couleur" value="Argentee">Argentee
+      </td>
+    </tr>
+    <tr>
+      <td>Quantité :</td>
+      <td>
+        <select name="quantite">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" align="center">
+        <input type="submit" value="Commander">
+      </td>
+    </tr>
+  </table>
+</form>
+
+</body>
+</html>
