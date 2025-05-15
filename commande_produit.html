@@ -4,11 +4,32 @@
   <meta charset="UTF-8" />
   <title>Commande Produit</title>
 
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
   <script>
-    // Fonction de validation commande (extrait de validation.js)
+    function getParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+
+    window.onload = function () {
+      const image = getParam('image');
+      const prix = getParam('prix');
+      const ref = getParam('ref');
+
+      if (image) {
+        document.getElementById('produit-image').src = image;
+      }
+      if (prix) {
+        document.getElementById('produit-prix').value = prix + " €";
+      }
+      if (ref) {
+        document.getElementById('produit-ref').value = ref;
+      }
+    };
+
     function validation_order() {
       let couleur = document.querySelector('input[name="couleur"]:checked');
-
       if (!couleur) {
         alert("Veuillez sélectionner une couleur.");
         return false;
@@ -27,116 +48,196 @@
     function redirigerVersLogin(event) {
       event.preventDefault();
 
-      // Appel validation
-      if (!validation_order()) {
-        return;
-      }
+      if (!validation_order()) return;
 
-      // Récupération des valeurs
       const quantite = document.querySelector('select[name="quantite"]').value;
       const couleur = document.querySelector('input[name="couleur"]:checked').value;
 
-      // Redirection vers login.html avec paramètres
       const url = `login.html?quantite=${quantite}&couleur=${encodeURIComponent(couleur)}&redir=commande`;
       window.location.href = url;
     }
   </script>
 
   <style>
+    /* Reset et base */
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #f3f3f3, #fce4ec);
-      margin: 0;
-      padding: 40px 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f9f8fb;
+      color: #333;
+      margin: 40px;
+      display: flex;
+      justify-content: center;
     }
-    table {
-      margin: auto;
-      background-color: #ffffff;
-      border-collapse: collapse;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      border: 2px solid #f8bbd0;
+
+    form {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgba(230, 126, 170, 0.25);
+      max-width: 720px;
+      width: 100%;
+      padding: 30px 40px;
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+    }
+
+    /* Image produit */
+    #produit-image {
+      width: 320px;
+      height: 320px;
+      object-fit: cover;
       border-radius: 16px;
-      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(230, 126, 170, 0.3);
+      flex-shrink: 0;
     }
-    td {
-      padding: 15px;
-      font-size: 1em;
-      color: #444;
-      border-bottom: 1px solid #f3f3f3;
+
+    /* Partie infos + formulaire */
+    .infos {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
-    input[type="text"],
-    select {
-      padding: 8px;
-      border: 1px solid #ccc;
+
+    .infos label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #a64d79;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    input[type="text"]:disabled {
+      background: #f0e6f1;
+      border: 1.5px solid #d6a3be;
       border-radius: 8px;
-      background-color: #f9f9f9;
+      padding: 10px 12px;
+      color: #7d5a70;
+      font-weight: 600;
     }
-    input[disabled] {
-      color: #555;
-      background-color: #eee;
+
+    /* Couleur radio */
+    .couleurs {
+      display: flex;
+      gap: 20px;
     }
-    input[type="radio"] {
-      margin-right: 5px;
+
+    .couleurs input[type="radio"] {
+      display: none;
     }
-    label {
-      margin-right: 15px;
+
+    .couleurs label {
       cursor: pointer;
+      padding: 10px 18px;
+      border: 2px solid #d6a3be;
+      border-radius: 25px;
+      color: #7d5a70;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      user-select: none;
     }
-    input[type="submit"] {
-      padding: 12px 24px;
-      background-color: #f06292;
+
+    .couleurs input[type="radio"]:checked + label {
+      background-color: #e67eaa;
       color: white;
-      font-size: 1em;
-      border: none;
+      border-color: #e67eaa;
+      box-shadow: 0 4px 10px rgba(230, 126, 170, 0.5);
+    }
+
+    /* Quantité */
+    select {
+      width: 100px;
+      padding: 10px 12px;
       border-radius: 8px;
+      border: 1.5px solid #d6a3be;
+      font-weight: 600;
+      background-color: #f9f5f8;
+      color: #7d5a70;
       cursor: pointer;
-      transition: background-color 0.3s;
+      transition: border-color 0.3s ease;
     }
+
+    select:hover,
+    select:focus {
+      border-color: #e67eaa;
+      outline: none;
+    }
+
+    /* Bouton */
+    input[type="submit"] {
+      margin-top: 30px;
+      align-self: center;
+      background-color: #e67eaa;
+      border: none;
+      padding: 14px 48px;
+      font-weight: 700;
+      font-size: 18px;
+      color: #fff;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(230, 126, 170, 0.45);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
     input[type="submit"]:hover {
-      background-color: #ec407a;
+      background-color: #cc5a88;
+      box-shadow: 0 8px 25px rgba(204, 90, 136, 0.7);
     }
-    img {
-      display: block;
-      margin: auto;
-      border-radius: 8px;
-    }
-    tr:last-child td {
-      border-bottom: none;
+
+    /* Responsive */
+    @media (max-width: 760px) {
+      form {
+        flex-direction: column;
+        padding: 20px 25px;
+      }
+      #produit-image {
+        width: 100%;
+        height: auto;
+      }
     }
   </style>
 </head>
 
 <body>
+  <form onsubmit="redirigerVersLogin(event)">
+    <img id="produit-image" src="photo_2025-05-14_18-12-34.jpg" alt="Produit" />
 
-<form onsubmit="redirigerVersLogin(event)">
-  <table>
-    <tr>
-      <td rowspan="6">
-        <img src="photo_2025-05-14_18-12-34.jpg" width="300" height="300" alt="Produit" />
-      </td>
-      <td>Nom du vendeur :</td>
-      <td><input type="text" value="Vendeur1" disabled /></td>
-    </tr>
-    <tr>
-      <td>Prix :</td>
-      <td><input type="text" value="25.99€" disabled /></td>
-    </tr>
-    <tr>
-      <td>Référence :</td>
-      <td><input type="text" value="REF1234" disabled /></td>
-    </tr>
-    <tr>
-      <td>Couleur :</td>
-      <td>
-        <input type="radio" name="couleur" value="Doree" id="doree" />
-        <label for="doree">Doree</label>
-        <input type="radio" name="couleur" value="Argentee" id="argentee" />
-        <label for="argentee">Argentee</label>
-      </td>
-    </tr>
-    <tr>
-      <td>Quantité :</td>
-      <td>
+    <div class="infos">
+      <div class="input-group">
+        <label>Nom du vendeur :</label>
+        <input type="text" value="Vendeur1" disabled />
+      </div>
+
+      <div class="input-group">
+        <label>Prix :</label>
+        <input type="text" id="produit-prix" value="25.99 €" disabled />
+      </div>
+
+      <div class="input-group">
+        <label>Référence :</label>
+        <input type="text" id="produit-ref" value="REF1234" disabled />
+      </div>
+
+      <div class="input-group">
+        <label>Couleur :</label>
+        <div class="couleurs">
+          <input type="radio" name="couleur" value="Dorée" id="doree" />
+          <label for="doree">Dorée</label>
+
+          <input type="radio" name="couleur" value="Argentée" id="argentee" />
+          <label for="argentee">Argentée</label>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Quantité :</label>
         <select name="quantite">
           <option value="1">1</option>
           <option value="2">2</option>
@@ -144,15 +245,10 @@
           <option value="4">4</option>
           <option value="5">5</option>
         </select>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="2" align="center">
-        <input type="submit" value="Commander" />
-      </td>
-    </tr>
-  </table>
-</form>
+      </div>
 
+      <input type="submit" value="Commander" />
+    </div>
+  </form>
 </body>
 </html>
