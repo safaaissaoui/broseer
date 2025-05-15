@@ -1,23 +1,47 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Commande Produit</title>
-  <script defer>
+
+  <script>
+    // Fonction de validation commande (extrait de validation.js)
+    function validation_order() {
+      let couleur = document.querySelector('input[name="couleur"]:checked');
+
+      if (!couleur) {
+        alert("Veuillez sélectionner une couleur.");
+        return false;
+      }
+
+      let quantite = document.querySelector('select[name="quantite"]').value;
+
+      let message = "Vous avez sélectionné :\n\n";
+      message += "- Couleur : " + couleur.value + "\n";
+      message += "- Quantité : " + quantite + "\n\n";
+      message += "Confirmez-vous votre commande ?";
+
+      return confirm(message);
+    }
+
     function redirigerVersLogin(event) {
       event.preventDefault();
 
-      // Récupérer les valeurs du formulaire
-      const quantite = document.querySelector('select[name="quantite"]').value;
-      const couleurs = Array.from(document.querySelectorAll('input[name="couleur"]:checked'))
-                            .map(cb => cb.value)
-                            .join(',');
+      // Appel validation
+      if (!validation_order()) {
+        return;
+      }
 
-      // Redirection vers login.html avec les paramètres dans l'URL
-      const url = `login.html?quantite=${quantite}&couleur=${encodeURIComponent(couleurs)}&redir=commande`;
+      // Récupération des valeurs
+      const quantite = document.querySelector('select[name="quantite"]').value;
+      const couleur = document.querySelector('input[name="couleur"]:checked').value;
+
+      // Redirection vers login.html avec paramètres
+      const url = `login.html?quantite=${quantite}&couleur=${encodeURIComponent(couleur)}&redir=commande`;
       window.location.href = url;
     }
   </script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -25,7 +49,6 @@
       margin: 0;
       padding: 40px 0;
     }
-
     table {
       margin: auto;
       background-color: #ffffff;
@@ -35,14 +58,12 @@
       border-radius: 16px;
       overflow: hidden;
     }
-
     td {
       padding: 15px;
       font-size: 1em;
       color: #444;
       border-bottom: 1px solid #f3f3f3;
     }
-
     input[type="text"],
     select {
       padding: 8px;
@@ -50,16 +71,17 @@
       border-radius: 8px;
       background-color: #f9f9f9;
     }
-
     input[disabled] {
       color: #555;
       background-color: #eee;
     }
-
-    input[type="checkbox"] {
+    input[type="radio"] {
       margin-right: 5px;
     }
-
+    label {
+      margin-right: 15px;
+      cursor: pointer;
+    }
     input[type="submit"] {
       padding: 12px 24px;
       background-color: #f06292;
@@ -70,46 +92,46 @@
       cursor: pointer;
       transition: background-color 0.3s;
     }
-
     input[type="submit"]:hover {
       background-color: #ec407a;
     }
-
     img {
       display: block;
       margin: auto;
       border-radius: 8px;
     }
-
     tr:last-child td {
       border-bottom: none;
     }
   </style>
 </head>
+
 <body>
 
 <form onsubmit="redirigerVersLogin(event)">
   <table>
     <tr>
       <td rowspan="6">
-        <img src="photo_2025-05-14_18-12-34.jpg" width="300" height="300" alt="Produit">
+        <img src="photo_2025-05-14_18-12-34.jpg" width="300" height="300" alt="Produit" />
       </td>
       <td>Nom du vendeur :</td>
-      <td><input type="text" value="Vendeur1" disabled></td>
+      <td><input type="text" value="Vendeur1" disabled /></td>
     </tr>
     <tr>
       <td>Prix :</td>
-      <td><input type="text" value="25.99€" disabled></td>
+      <td><input type="text" value="25.99€" disabled /></td>
     </tr>
     <tr>
       <td>Référence :</td>
-      <td><input type="text" value="REF1234" disabled></td>
+      <td><input type="text" value="REF1234" disabled /></td>
     </tr>
     <tr>
       <td>Couleur :</td>
       <td>
-        <input type="checkbox" name="couleur" value="Doree">Doree
-        <input type="checkbox" name="couleur" value="Argentee">Argentee
+        <input type="radio" name="couleur" value="Doree" id="doree" />
+        <label for="doree">Doree</label>
+        <input type="radio" name="couleur" value="Argentee" id="argentee" />
+        <label for="argentee">Argentee</label>
       </td>
     </tr>
     <tr>
@@ -126,7 +148,7 @@
     </tr>
     <tr>
       <td colspan="2" align="center">
-        <input type="submit" value="Commander">
+        <input type="submit" value="Commander" />
       </td>
     </tr>
   </table>
